@@ -1,8 +1,62 @@
 ---
-title: "DPH"
 output: github_document
 ---
 
-  <!-- badges: start -->
-  [![R build status](https://github.com/celehs/DPH/workflows/R-CMD-check/badge.svg)](https://github.com/celehs/DPH/actions)
-  <!-- badges: end -->
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# DPH
+
+<!-- badges: start -->
+[![R build status](https://github.com/celehs/DPH/workflows/R-CMD-check/badge.svg)](https://github.com/celehs/DPH/actions)
+<!-- badges: end -->
+
+DPH provides functions to fit standard discrete proportional hazards (DPH) model and adjusted DPH models for time-to-event data with mismeasured outcomes.
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/celehs/DPH) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("celehs/DPH")
+```
+
+## Example
+
+```{r setup}
+library(DPH)
+```
+
+Here is a simulated example which shows you how to use DPH:
+
+```{r example}
+set.seed(1)
+n <- 100
+time <- sample(1:5, n, replace = TRUE)
+status <- rbinom(n, 1, 0.5)
+covariates <- rnorm(n)
+```
+
+Fit standard DPH model:
+
+```{r model}
+dph_fit0(time, status, covariates)
+```
+
+## References
+
+- Evaluating Biomarkers using Panel Current Status Data with
+Misclassication Errors. (Working Paper)
+
+- Meier, A. S., Richardson, B. A., & Hughes, J. P. (2003). Discrete proportional hazards models for mismeasured outcomes. Biometrics, 59(4), 947–954. https://doi.org/10.1111/j.0006-341x.2003.00109.x
+
+- [Complementary Log-Log Model for Interval-Censored Survival Times](https://documentation.sas.com/?cdcId=statcdc&cdcVersion=14.2&docsetId=statug&docsetTarget=statug_logistic_examples19.htm&locale=en#statug.logistic.logx12codea)
