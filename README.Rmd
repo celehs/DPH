@@ -23,7 +23,7 @@ DPH provides functions to fit standard discrete proportional hazards (DPH) model
 
 ![](https://github.com/celehs/misclassification/blob/master/flowchart/flowchart-misclassification.jpg?raw=true)
 
-## Example
+## Installation
 
 You can install the development version from [GitHub](https://github.com/celehs/DPH) with:
 
@@ -32,24 +32,7 @@ You can install the development version from [GitHub](https://github.com/celehs/
 devtools::install_github("celehs/DPH")
 ```
 
-```{r setup}
-library(DPH)
-```
-
-Here is a simulated example which shows you how to use DPH:
-
-```{r example}
-sim_data
-```
-
-Fit standard DPH model:
-
-```{r model}
-dph_fit0(
-  time = sim_data$time, 
-  status = sim_data$status, 
-  predictors = sim_data[, -(1:2)])
-```
+Click [HERE](articles/sim_example.html) to view a simulated example.
 
 ## References
 

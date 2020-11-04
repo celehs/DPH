@@ -16,3 +16,7 @@ Depends:
 Imports:
     tibble
 URL: http://github.com/celehs/DPH
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
