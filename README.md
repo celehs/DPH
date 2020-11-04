@@ -11,9 +11,12 @@ status](https://github.com/celehs/DPH/workflows/R-CMD-check/badge.svg)](https://
 
 DPH provides functions to fit standard discrete proportional hazards
 (DPH) model and adjusted DPH models for time-to-event data with
-mismeasured outcomes.
+mismeasured
+outcomes.
 
-## Installation
+![](https://github.com/celehs/misclassification/blob/master/flowchart/flowchart-misclassification.jpg?raw=true)
+
+## Example
 
 You can install the development version from
 [GitHub](https://github.com/celehs/DPH) with:
@@ -23,8 +26,6 @@ You can install the development version from
 devtools::install_github("celehs/DPH")
 ```
 
-## Example
-
 ``` r
 library(DPH)
 ```
@@ -32,28 +33,41 @@ library(DPH)
 Here is a simulated example which shows you how to use DPH:
 
 ``` r
-set.seed(1)
-n <- 100
-time <- sample(1:5, n, replace = TRUE)
-status <- rbinom(n, 1, 0.5)
-covariates <- rnorm(n)
+sim_data
+#> # A tibble: 1,000 x 4
+#>     time status pred1 pred2
+#>    <int>  <int> <dbl> <int>
+#>  1     5      1  1.37     1
+#>  2     5      1  2.18     0
+#>  3     1      1  1.16     0
+#>  4     1      1  3.60     0
+#>  5     2      1  2.33     1
+#>  6     3      1  1.18     1
+#>  7     1      1  2.49     0
+#>  8     1      1  2.74     0
+#>  9     2      1  2.58     1
+#> 10     3      1  1.69     1
+#> # … with 990 more rows
 ```
 
 Fit standard DPH model:
 
 ``` r
-dph_fit0(time, status, covariates)
+dph_fit0(
+  time = sim_data$time, 
+  status = sim_data$status, 
+  predictors = sim_data[, -(1:2)])
 #> $fit
 #> 
 #> Call:  stats::glm(formula = y ~ z + Z - 1, family = stats::binomial("cloglog"))
 #> 
 #> Coefficients:
-#>      z1       z2       z3       z4       z5        Z  
-#> -1.9772  -2.5258  -1.5271  -0.9350  -0.8946   0.1250  
+#>       z1        z2        z3        z4        z5    Zpred1    Zpred2  
+#> -2.52124  -1.86924  -1.59106  -1.49228  -1.45003   0.67569  -0.01484  
 #> 
-#> Degrees of Freedom: 295 Total (i.e. Null);  289 Residual
-#> Null Deviance:       535.9 
-#> Residual Deviance: 251.5     AIC: 263.5
+#> Degrees of Freedom: 2490 Total (i.e. Null);  2483 Residual
+#> Null Deviance:       3990 
+#> Residual Deviance: 2866  AIC: 2880
 ```
 
 ## References

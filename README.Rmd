@@ -21,7 +21,9 @@ knitr::opts_chunk$set(
 
 DPH provides functions to fit standard discrete proportional hazards (DPH) model and adjusted DPH models for time-to-event data with mismeasured outcomes.
 
-## Installation
+![](https://github.com/celehs/misclassification/blob/master/flowchart/flowchart-misclassification.jpg?raw=true)
+
+## Example
 
 You can install the development version from [GitHub](https://github.com/celehs/DPH) with:
 
@@ -30,8 +32,6 @@ You can install the development version from [GitHub](https://github.com/celehs/
 devtools::install_github("celehs/DPH")
 ```
 
-## Example
-
 ```{r setup}
 library(DPH)
 ```
@@ -39,17 +39,16 @@ library(DPH)
 Here is a simulated example which shows you how to use DPH:
 
 ```{r example}
-set.seed(1)
-n <- 100
-time <- sample(1:5, n, replace = TRUE)
-status <- rbinom(n, 1, 0.5)
-covariates <- rnorm(n)
+sim_data
 ```
 
 Fit standard DPH model:
 
 ```{r model}
-dph_fit0(time, status, covariates)
+dph_fit0(
+  time = sim_data$time, 
+  status = sim_data$status, 
+  predictors = sim_data[, -(1:2)])
 ```
 
 ## References

@@ -4,14 +4,14 @@
 \alias{dph_fit0}
 \title{Standard Discrete Proportional Hazards Model}
 \usage{
-dph_fit0(time, status, covariates)
+dph_fit0(time, status, predictors)
 }
 \arguments{
 \item{time}{a vector of discrete time (e.g. 1, 2, 3, ...)}
 
 \item{status}{a vector of event status (1 = observed, 0 = censored)}
 
-\item{covariates}{a vector/matrix of covariates (e.g. biomarkers)}
+\item{predictors}{a vector/matrix of predictors (e.g. biomarkers)}
 }
 \description{
 Standard Discrete Proportional Hazards Model
