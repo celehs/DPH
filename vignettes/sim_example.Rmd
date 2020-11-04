@@ -22,7 +22,13 @@ Here is a simulated example which shows you how to use DPH:
 
 ```{r example}
 sim_data
-addmargins(table(sim_data$time, sim_data$status))
+```
+
+Outcome summary of the simulated data:
+
+```{r table}
+tbl <- table(sim_data$time, sim_data$status)
+addmargins(tbl)
 ```
 
 Fit standard DPH model:
