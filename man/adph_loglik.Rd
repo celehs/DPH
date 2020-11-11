@@ -4,12 +4,12 @@
 \alias{adph_loglik}
 \title{ADPH Log-likelihood}
 \usage{
-adph_loglik(lambda0, beta, sens, spec, t0, d0, X)
+adph_loglik(beta, lambda0, sens, spec, t0, d0, X)
 }
 \arguments{
-\item{lambda0}{baseline hazards}
-
 \item{beta}{regression coefficients}
+
+\item{lambda0}{baseline hazards}
 
 \item{sens}{sensitivities}
 

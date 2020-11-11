@@ -4,7 +4,7 @@
 \alias{adph}
 \title{Adjusted Discrete Proportional Hazards (ADPH) Model}
 \usage{
-adph(time, status, pred, sens, spec)
+adph(time, status, pred, sens, spec, sens_known = TRUE, spec_known = TRUE)
 }
 \arguments{
 \item{time}{a vector of discrete time (e.g. 1, 2, 3, ...)}
@@ -16,6 +16,10 @@ adph(time, status, pred, sens, spec)
 \item{sens}{sensitivity (a scalar or vector)}
 
 \item{spec}{specificity (a scalar or vector)}
+
+\item{sens_known}{indicator of whether sensitivity is known}
+
+\item{spec_known}{indicator of whether specificity if known}
 }
 \description{
 Adjusted Discrete Proportional Hazards (ADPH) Model

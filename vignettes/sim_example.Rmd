@@ -24,42 +24,84 @@ Here is a simulated example which shows you how to use DPH:
 sim_data
 ```
 
+```{r}
+time <- sim_data$time
+status <- sim_data$status
+pred <- sim_data[, -(1:2)]
+```
+
 Outcome summary of the simulated data:
 
 ```{r table}
-tbl <- table(sim_data$time, sim_data$status)
+tbl <- table(time, status)
 addmargins(tbl)
 ```
 
-Standard DPH Model
+## Standard DPH Model
 
 ```{r model}
 dph(
-  time = sim_data$time, 
-  status = sim_data$status, 
-  pred = sim_data[, -(1:2)]
+  time = time, 
+  status = status, 
+  pred = pred
 )
 ```
 
 ## Adjusted DPH Model
 
+### Case 1
+
 ```{r}
 adph(
-  time = sim_data$time, 
-  status = sim_data$status, 
-  pred = sim_data[, -(1:2)],
-  sens = 0.95,
-  spec = 0.99
+  time = time, 
+  status = status, 
+  pred = pred,
+  sens = 0.8,
+  spec = 0.9
+)
+```
+
+### Case 2
+
+```{r}
+adph(
+  time = time, 
+  status = status, 
+  pred = pred,
+  sens = 0.8,
+  spec = 0.9,
+  sens_known = FALSE
+)
+```
+
+### Case 3
+
+```{r}
+adph(
+  time = time, 
+  status = status, 
+  pred = pred,
+  sens = 0.8,
+  spec = 0.9,
+  spec_known = FALSE
+)
+```
+
+### Case 4
+
+```{r}
+adph(
+  time = time, 
+  status = status, 
+  pred = pred,
+  sens = 0.8,
+  spec = 0.9,
+  sens_known = FALSE,  
+  spec_known = FALSE
 )
 ```
 
 ```{r}
-adph(
-  time = sim_data$time, 
-  status = sim_data$status, 
-  pred = sim_data[, -(1:2)],
-  sens = seq(0.8, 0.9, 0.025),
-  spec = 0.95
-)
+proc.time()
 ```
 

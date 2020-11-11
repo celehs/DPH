@@ -30,5 +30,5 @@ dph <- function(time, status, pred) {
   lambda0 <- 1 - exp(-exp(alpha))
   names(lambda0) <- paste0("time", 1:t_max)
   names(beta) <- colnames(Z)
-  list(lambda0 = lambda0, beta = beta)
+  list(beta = beta, lambda0 = lambda0)
 }
