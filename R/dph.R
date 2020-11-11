@@ -1,13 +1,14 @@
 #' Standard Discrete Proportional Hazards Model
 #' @param time a vector of discrete time (e.g. 1, 2, 3, ...)
 #' @param status a vector of event status (1 = observed, 0 = censored)
-#' @param predictors a vector/matrix of predictors (e.g. biomarkers)
+#' @param pred a vector/matrix of predictors (e.g. biomarkers)
 #' @export
-dph_fit0 <- function(time, status, predictors) {
+dph <- function(time, status, pred) {
   t <- c(time)
   d <- c(status)
-  X <- as.matrix(predictors)
+  X <- as.matrix(pred)
   n <- nrow(X)
+  t_max <- max(t)
   stopifnot(t > 0)
   # stopifnot(d %in% c(0, 1))
   stopifnot(length(t) == n)
@@ -24,6 +25,10 @@ dph_fit0 <- function(time, status, predictors) {
   z <- factor(DF[, 2])
   Z <- DF[, -(1:2)]
   fit <- stats::glm(y ~ z + Z - 1, family = stats::binomial("cloglog"))
-  # lambda0 <- 
-  list(fit = fit)
+  alpha <- fit$coef[1:t_max]
+  beta <- fit$coef[-(1:t_max)]
+  lambda0 <- 1 - exp(-exp(alpha))
+  names(lambda0) <- paste0("time", 1:t_max)
+  names(beta) <- colnames(Z)
+  list(lambda0 = lambda0, beta = beta)
 }

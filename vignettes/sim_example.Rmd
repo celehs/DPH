@@ -31,11 +31,35 @@ tbl <- table(sim_data$time, sim_data$status)
 addmargins(tbl)
 ```
 
-Fit standard DPH model:
+Standard DPH Model
 
 ```{r model}
-dph_fit0(
+dph(
   time = sim_data$time, 
   status = sim_data$status, 
-  predictors = sim_data[, -(1:2)])
+  pred = sim_data[, -(1:2)]
+)
 ```
+
+## Adjusted DPH Model
+
+```{r}
+adph(
+  time = sim_data$time, 
+  status = sim_data$status, 
+  pred = sim_data[, -(1:2)],
+  sens = 0.95,
+  spec = 0.99
+)
+```
+
+```{r}
+adph(
+  time = sim_data$time, 
+  status = sim_data$status, 
+  pred = sim_data[, -(1:2)],
+  sens = seq(0.8, 0.9, 0.025),
+  spec = 0.95
+)
+```
+
