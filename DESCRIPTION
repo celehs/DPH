@@ -18,5 +18,6 @@ Imports:
 URL: http://github.com/celehs/DPH
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
