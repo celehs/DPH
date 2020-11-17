@@ -47,7 +47,7 @@ dph(
 )
 ```
 
-## Adjusted DPH Model
+## ADPH Model
 
 ### Case 1
 
@@ -101,7 +101,16 @@ adph(
 )
 ```
 
+## ADPH2 Model
+
+```{r}
+adph2(
+  time = time, 
+  status = status, 
+  pred = pred,
+)
+```
+
 ```{r}
 proc.time()
 ```
-

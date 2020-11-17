@@ -30,5 +30,5 @@ dph <- function(time, status, pred) {
   lambda0 <- 1 - exp(-exp(alpha))
   names(lambda0) <- paste0("time", 1:t_max)
   names(beta) <- colnames(Z)
-  list(beta = beta, lambda0 = lambda0)
+  list(beta = beta, lambda0 = lambda0, loglik = c(logLik(fit)))
 }
