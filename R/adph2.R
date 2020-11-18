@@ -40,9 +40,9 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL) {
   X <- as.matrix(pred)  
   np <- ncol(X)  
   fit0 <- dph(time, status, pred)
-  if (is.null(lambda0)) lambda0 <- stats::qlogis(fit0$lambda0)
+  if (is.null(lambda0)) lambda0 <- fit0$lambda0
   if (is.null(lambda0_s)) lambda0_s <- lambda0
-  start <- c(fit0$beta, lambda0, lambda0_s) 
+  start <- c(fit0$beta, stats::qlogis(lambda0), stats::qlogis(lambda0_s)) 
   fit <- stats::optim(
     par = start,
     fn = function(par) {
