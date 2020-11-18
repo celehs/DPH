@@ -52,7 +52,7 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL) {
         lambda0_s = stats::plogis(par[np + nt + 1:nt]),
         t0 = c(time),
         d0 = c(status), 
-        X = as.matrix(pred)
+        X = X
       )
     },
     method = "BFGS"
@@ -60,5 +60,13 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL) {
   beta <- fit$par[1:np]
   lambda0 <- stats::plogis(fit$par[np + 1:nt]) 
   lambda0_s <- stats::plogis(fit$par[np + nt + 1:nt])
-  list(beta = beta, lambda0 = lambda0, lambda0_s = lambda0_s, loglik = -fit$value)  
+  AUC <- acc_est(score = c(X %*% beta), lambda0 = lambda0)
+  names(AUC) <- names(lambda0)
+  return(list(
+    beta = beta, 
+    lambda0 = lambda0, 
+    lambda0_s = lambda0_s, 
+    loglik = -fit$value, 
+    AUC = AUC
+  ))  
 }
