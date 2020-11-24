@@ -4,7 +4,15 @@
 \alias{adph2}
 \title{Adjusted Discrete Proportional Hazards (ADPH) Model}
 \usage{
-adph2(time, status, pred, lambda0 = NULL, lambda0_s = NULL)
+adph2(
+  time,
+  status,
+  pred,
+  lambda0 = NULL,
+  lambda0_s = NULL,
+  n_ptb = 100,
+  seed = 1
+)
 }
 \arguments{
 \item{time}{a vector of discrete time (e.g. 1, 2, 3, ...)}
@@ -16,6 +24,10 @@ adph2(time, status, pred, lambda0 = NULL, lambda0_s = NULL)
 \item{lambda0}{baseline hazards}
 
 \item{lambda0_s}{...}
+
+\item{n_ptb}{number of perturbations}
+
+\item{seed}{random number generation seed}
 }
 \description{
 Adjusted Discrete Proportional Hazards (ADPH) Model

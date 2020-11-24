@@ -1,6 +1,6 @@
 Package: DPH
 Title: Discrete Proportional Hazards Models
-Version: 0.0.1.9000
+Version: 0.0.2
 Authors@R: 
     person("PARSE",
            role = c("aut", "cre"),

@@ -4,7 +4,7 @@
 \alias{adph2_loglik}
 \title{ADPH2 Log-likelihood}
 \usage{
-adph2_loglik(beta, lambda0, lambda0_s, t0, d0, X)
+adph2_loglik(beta, lambda0, lambda0_s, t0, d0, X, w = NULL)
 }
 \arguments{
 \item{beta}{regression coefficients}
@@ -17,7 +17,9 @@ adph2_loglik(beta, lambda0, lambda0_s, t0, d0, X)
 
 \item{d0}{observed event indicator}
 
-\item{X}{baseline covaraites}
+\item{X}{predictors}
+
+\item{w}{weights}
 }
 \description{
 ADPH2 Log-likelihood

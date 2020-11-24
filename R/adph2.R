@@ -77,7 +77,7 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL,
   colnames(lambda0_s_ptb) <- names(lambda0_s)
   set.seed(seed)
   for (i in 1:n_ptb) {
-    w <- rexp(n)
+    w <- stats::rexp(n)
     start <- c(beta, stats::qlogis(lambda0), stats::qlogis(lambda0_s)) 
     fit <- stats::optim(
       par = start,
