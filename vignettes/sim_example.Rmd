@@ -104,11 +104,14 @@ adph(
 ## ADPH2 Model
 
 ```{r}
-adph2(
-  time = time, 
-  status = status, 
-  pred = pred,
+system.time(
+  adph2_model <- adph2(
+    time = time, 
+    status = status, 
+    pred = pred,
+  )
 )
+adph2_model
 ```
 
 ```{r}
