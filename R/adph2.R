@@ -67,7 +67,7 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL,
   lambda0 <- stats::plogis(fit$par[np + 1:nt]) 
   lambda0_s <- stats::plogis(fit$par[np + nt + 1:nt])
   loglik <- -fit$value
-  AUC <- acc_est(score = c(X %*% beta), lambda0 = lambda0)
+  AUC <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
   names(AUC) <- names(lambda0) 
   beta_ptb <- data.frame(matrix(NA, n_ptb, np))
   lambda0_ptb <- data.frame(matrix(NA, n_ptb, nt))

@@ -1,0 +1,7 @@
+pandoc: 2.3.1
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  sim_example: sim_example.html
+last_built: 2020-11-25T03:11Z
+
