@@ -1,4 +1,11 @@
-acc_est <- function(score, X, beta, lambda0, w = NULL) {
+#' AUC calculation
+#' @param score risk score
+#' @param X predictors
+#' @param beta regression coefficients
+#' @param lambda0 baseline hazards
+#' @param w weights
+#' @export
+auc <- function(score, X, beta, lambda0, w = NULL) {
   eta <- c(as.matrix(X) %*% beta)  
   if (is.null(w)) w <- rep(1, length(eta))  
   K <- length(lambda0)
