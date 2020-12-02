@@ -1,0 +1,30 @@
+---
+title: "Model Fitting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Model Fitting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Notation
+
+- $\xi_{ij} = \{1 + \exp(\gamma_{0j})\}^{-\exp\{\beta^\top\Psi(Z_i)\}}$
+
+- $\Gamma_i = \{\prod_{j = 1}^{t_i^0} \phi_j\} \{(1 - \phi_{t_i^0}) / \phi_{t_i^0}\}^{d_i^0}$
+
+- $\Delta_{i k} = \{\prod_{j=1}^{k-1} \phi_j\} \{\prod_{j=k}^{t_i^0} (1 - \theta_{j - k})\} \{\theta_{t_i^0 - k} / (1 - \theta_{t_i^0 - k})\}^{d_i^0}$
+
+- $f(t_i^0, d_i^0, Z_i; \beta, \gamma_0, \theta, \phi) = \Gamma_i \prod_{j=1}^{t_i^0} \xi_{ij} + \sum_{k = 1}^{t_i^0} \{ \Delta_{ik} (1 - \xi_{ik}) \prod_{j=1}^{k - 1} \xi_{ij} \}$
+
+## Likelihood
+
+- $L(\beta, \gamma_0, \theta, \phi) = \prod_{i=1}^n f(t_i^0, d_i^0, Z_i; \beta, \gamma_0, \theta, \phi)$
+
+- $l(\beta, \gamma_0, \theta, \phi) = \sum_{i=1}^n \log f(t_i^0, d_i^0, Z_i; \beta, \gamma_0, \theta, \phi)$
+
+## References
+
+- Meier, A.S., Richardson, B.A. and Hughes, J.P. (2003), Discrete Proportional Hazards Models for Mismeasured Outcomes. _Biometrics_, 59: 947-954. https://doi.org/10.1111/j.0006-341X.2003.00109.x
+
+- Magaret, A.S. (2008), Incorporating validation subsets into discrete proportional hazards models for mismeasured outcomes. _Statist. Med._, 27: 5456-5470. https://doi.org/10.1002/sim.3365

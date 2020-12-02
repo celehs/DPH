@@ -3,6 +3,8 @@
 
 # DPH
 
+![<https://img.shields.io/badge/lifecycle-experimental-orange.svg>](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+
 DPH provides functions to fit standard discrete proportional hazards
 (DPH) model and adjusted DPH models for time-to-event data with
 mismeasured
