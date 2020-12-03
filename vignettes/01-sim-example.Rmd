@@ -109,6 +109,7 @@ system.time(
     time = time, 
     status = status, 
     pred = pred,
+    n_ptb = 100
   )
 )
 adph2_model
