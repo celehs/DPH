@@ -11,7 +11,8 @@ adph2(
   lambda0 = NULL,
   lambda0_s = NULL,
   n_ptb = 100,
-  seed = 1
+  seed = 1,
+  show_progress = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ adph2(
 \item{n_ptb}{number of perturbations}
 
 \item{seed}{random number generation seed}
+
+\item{show_progress}{TRUE or FALSE (default)}
 }
 \description{
 Adjusted Discrete Proportional Hazards (ADPH) Model
