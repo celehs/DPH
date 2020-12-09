@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulated Data Example — sim_data • DPH</title>
+<title>Accuracy Estimation — acc_est • DPH</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Simulated Data Example — sim_data" />
-<meta property="og:description" content="Simulated Data Example" />
+<meta property="og:title" content="Accuracy Estimation — acc_est" />
+<meta property="og:description" content="Accuracy Estimation" />
 
 
 
@@ -126,27 +126,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulated Data Example</h1>
-    <small class="dont-index">Source: <a href='http://github.com/celehs/DPH/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>sim_data.Rd</code></div>
+    <h1>Accuracy Estimation</h1>
+    <small class="dont-index">Source: <a href='http://github.com/celehs/DPH/blob/master/R/acc_est.R'><code>R/acc_est.R</code></a></small>
+    <div class="hidden name"><code>acc_est.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simulated Data Example</p>
+    <p>Accuracy Estimation</p>
     </div>
 
-    <pre class="usage"><span class='va'>sim_data</span></pre>
+    <pre class="usage"><span class='fu'>acc_est</span><span class='op'>(</span><span class='va'>score</span>, <span class='va'>X</span>, <span class='va'>beta</span>, <span class='va'>lambda0</span>, w <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 1000 rows and 4 variables:</p><dl>
-<dt>time</dt><dd><p>discrete time</p></dd>
-<dt>status</dt><dd><p>event status</p></dd>
-<dt>pred1</dt><dd><p>first predictor</p></dd>
-<dt>pred2</dt><dd><p>second predictor</p></dd>
-
-</dl>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>score</th>
+      <td><p>risk score</p></td>
+    </tr>
+    <tr>
+      <th>X</th>
+      <td><p>predictors</p></td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td><p>regression coefficients</p></td>
+    </tr>
+    <tr>
+      <th>lambda0</th>
+      <td><p>baseline hazards</p></td>
+    </tr>
+    <tr>
+      <th>w</th>
+      <td><p>weights</p></td>
+    </tr>
+    </table>
 
 
   </div>

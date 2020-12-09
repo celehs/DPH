@@ -2,8 +2,8 @@ pandoc: 2.3.1
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  01-sim-example: 01-sim-example.html
-  02-model-fitting: 02-model-fitting.html
-  03-accuracy-measures: 03-accuracy-measures.html
-last_built: 2020-12-03T01:57Z
+  a1-sim-example: a1-sim-example.html
+  a2-model-fitting: a2-model-fitting.html
+  a3-accuracy-measures: a3-accuracy-measures.html
+last_built: 2020-12-09T03:54Z
 

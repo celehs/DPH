@@ -1,12 +1,3 @@
-#' ADPH2 Log-likelihood
-#' @param beta regression coefficients
-#' @param lambda0 baseline hazards
-#' @param lambda0_s ...
-#' @param t0 observed event time
-#' @param d0 observed event indicator
-#' @param X predictors
-#' @param w weights
-#' @export
 adph2_loglik <- function(beta, lambda0, lambda0_s, t0, d0, X, w = NULL) {
   nt <- max(t0)
   n <- length(t0)  
@@ -30,7 +21,7 @@ adph2_loglik <- function(beta, lambda0, lambda0_s, t0, d0, X, w = NULL) {
   return(sum(loglik))
 }
 
-adph2_fit <- function(time, status, X, w, start, method = "BFGS") {
+adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000) {
   nt <- max(time)  
   np <- ncol(X) 
   obj <- stats::optim(
@@ -46,20 +37,23 @@ adph2_fit <- function(time, status, X, w, start, method = "BFGS") {
         w = w
       )
     },
-    method = method
+    method = method,
+    control = list(maxit = maxit)
   )     
   loglik <- -obj$value
   beta <- obj$par[1:np]
   lambda0 <- stats::plogis(obj$par[np + 1:nt]) 
   lambda0_s <- stats::plogis(obj$par[np + nt + 1:nt])
-  AUC <- auc(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
-  names(AUC) <- names(lambda0)   
+  acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
   return(list(
+    convergence = obj$convergence,
     loglik = loglik,
     beta = beta, 
     lambda0 = lambda0,
     lambda0_s = lambda0_s,
-    AUC = AUC))
+    FPR = acc$FPR,
+    TPR = acc$TPR,
+    AUC = acc$AUC))
 }
 
 #' Adjusted Discrete Proportional Hazards (ADPH) Model
@@ -71,9 +65,10 @@ adph2_fit <- function(time, status, X, w, start, method = "BFGS") {
 #' @param n_ptb number of perturbations
 #' @param seed random number generation seed
 #' @param show_progress TRUE or FALSE (default)
+#' @param maxit maximum number of iterations
 #' @export
 adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL, 
-                  n_ptb = 200, seed = 1, show_progress = FALSE) {
+                  n_ptb = NULL, seed = 1, show_progress = FALSE, maxit = 1000) {
   n <- length(time)
   nt <- max(time)
   X <- as.matrix(pred)  
@@ -87,36 +82,46 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL,
     status = status,
     X = X,
     w = rep(1, n),
-    start = start
+    start = start,
+    maxit = maxit
   )
   ptb <- NULL
-  ptb$beta <- data.frame(matrix(NA, n_ptb, np))
-  ptb$lambda0 <- data.frame(matrix(NA, n_ptb, nt))
-  ptb$lambda0_s <- data.frame(matrix(NA, n_ptb, nt))
-  ptb$AUC <- data.frame(matrix(NA, n_ptb, nt))
-  colnames(ptb$beta) <- names(fit$beta)
-  colnames(ptb$lambda0) <- names(fit$lambda0)
-  colnames(ptb$lambda0_s) <- names(fit$lambda0_s)
-  colnames(ptb$AUC) <- names(fit$AUC)
-  set.seed(seed)
-  start <- c(fit$beta, fit$lambda0, fit$lambda0_s) 
-  for (i in 1:n_ptb) {
-    if (show_progress) print(paste0("perturbation: ", i, "/", n_ptb))
-    fit_ptb <- adph2_fit(
-      time = time,
-      status = status,
-      X = X,
-      w = stats::rexp(n),
-      start = start
-    ) 
-    ptb$beta[i, ] <- fit_ptb$beta
-    ptb$lambda0[i, ] <- fit_ptb$lambda0
-    ptb$lambda0_s[i, ] <- fit_ptb$lambda0_s   
-    ptb$AUC[i, ] <- fit_ptb$AUC
-  }
-  ptb$beta <- tibble::as_tibble(ptb$beta)
-  ptb$lambda0 <- tibble::as_tibble(ptb$lambda0)
-  ptb$lambda0_s <- tibble::as_tibble(ptb$lambda0_s)
-  ptb$AUC <- tibble::as_tibble(ptb$AUC)
+  if (!is.null(n_ptb) & fit$convergence == 0) {
+    ptb$weights <- data.frame(matrix(NA, n, n_ptb))
+    ptb$beta <- data.frame(matrix(NA, n_ptb, np))
+    ptb$lambda0 <- data.frame(matrix(NA, n_ptb, nt))
+    ptb$lambda0_s <- data.frame(matrix(NA, n_ptb, nt))
+    ptb$AUC <- data.frame(matrix(NA, n_ptb, nt))
+    colnames(ptb$weights) <- paste0("w", 1:n_ptb)
+    colnames(ptb$beta) <- names(fit$beta)
+    colnames(ptb$lambda0) <- names(fit$lambda0)
+    colnames(ptb$lambda0_s) <- names(fit$lambda0_s)
+    colnames(ptb$AUC) <- names(fit$AUC)
+    set.seed(seed)
+    start <- c(fit$beta, fit$lambda0, fit$lambda0_s) 
+    for (i in 1:n_ptb) {
+      if (show_progress) print(paste0("perturbation: ", i, "/", n_ptb))
+      ptb$weights[, i] <- stats::rexp(n)
+      fit_ptb <- adph2_fit(
+        time = time,
+        status = status,
+        X = X,
+        w = ptb$weights[, i],
+        start = start,
+        maxit = maxit
+      ) 
+      if (fit_ptb$convergence == 0) {
+        ptb$beta[i, ] <- fit_ptb$beta
+        ptb$lambda0[i, ] <- fit_ptb$lambda0
+        ptb$lambda0_s[i, ] <- fit_ptb$lambda0_s   
+        ptb$AUC[i, ] <- fit_ptb$AUC      
+      }
+    }
+    ptb$weights <- tibble::as_tibble(ptb$weights)    
+    ptb$beta <- tibble::as_tibble(ptb$beta)
+    ptb$lambda0 <- tibble::as_tibble(ptb$lambda0)
+    ptb$lambda0_s <- tibble::as_tibble(ptb$lambda0_s)
+    ptb$AUC <- tibble::as_tibble(ptb$AUC)    
+  }  
   return(list(fit = fit, ptb = ptb))  
 }

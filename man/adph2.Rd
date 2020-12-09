@@ -10,9 +10,10 @@ adph2(
   pred,
   lambda0 = NULL,
   lambda0_s = NULL,
-  n_ptb = 100,
+  n_ptb = NULL,
   seed = 1,
-  show_progress = FALSE
+  show_progress = FALSE,
+  maxit = 1000
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ adph2(
 \item{seed}{random number generation seed}
 
 \item{show_progress}{TRUE or FALSE (default)}
+
+\item{maxit}{maximum number of iterations}
 }
 \description{
 Adjusted Discrete Proportional Hazards (ADPH) Model
