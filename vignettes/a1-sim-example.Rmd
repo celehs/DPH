@@ -103,13 +103,28 @@ adph(
 
 ## ADPH2 Model
 
+### Model Fitting
+
+```{r}
+system.time(
+  adph2_model <- adph2(
+    time = time, 
+    status = status, 
+    pred = pred
+  )
+)
+adph2_model
+```
+
+### Perturbation Resampling
+
 ```{r}
 system.time(
   adph2_model <- adph2(
     time = time, 
     status = status, 
     pred = pred,
-    n_ptb = 100
+    n_ptb = 10
   )
 )
 adph2_model

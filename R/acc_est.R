@@ -1,11 +1,11 @@
-#' AUC calculation
+#' Accuracy Estimation
 #' @param score risk score
 #' @param X predictors
 #' @param beta regression coefficients
 #' @param lambda0 baseline hazards
 #' @param w weights
 #' @export
-auc <- function(score, X, beta, lambda0, w = NULL) {
+acc_est <- function(score, X, beta, lambda0, w = NULL) {
   eta <- c(as.matrix(X) %*% beta)  
   if (is.null(w)) w <- rep(1, length(eta))  
   K <- length(lambda0)
@@ -23,5 +23,8 @@ auc <- function(score, X, beta, lambda0, w = NULL) {
     TPR[, k] <- colSums(v2 * I)
     AUC[k] <- sum(diff(c(0, FPR[, k])) * TPR[, k])
   }
-  return(AUC)
+  FPR <- tibble::as_tibble(data.frame(score_cut = score_cut, FPR))
+  TPR <- tibble::as_tibble(data.frame(score_cut = score_cut, TPR))
+  colnames(FPR)[-1] <- colnames(TPR)[-1] <- names(AUC) <- names(lambda0)
+  return(list(FPR = FPR, TPR = TPR, AUC = AUC))
 }

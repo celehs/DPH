@@ -130,14 +130,15 @@ adph <- function(time, status, pred, sens, spec, sens_known = TRUE, spec_known =
   }
   beta <- fit$par[1:np]
   lambda0 <- stats::plogis(fit$par[np + 1:nt])     
-  AUC <- auc(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
-  names(AUC) <- names(lambda0)
+  acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
   return(list(
     beta = beta, 
     lambda0 = lambda0, 
     sens = sens, 
     spec = spec, 
     loglik = -fit$value, 
-    AUC = AUC
+    FPR = acc$FPR,
+    TPR = acc$TPR,
+    AUC = acc$AUC
   ))  
 }
