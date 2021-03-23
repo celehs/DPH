@@ -26,5 +26,5 @@ acc_est <- function(score, X, beta, lambda0, w = NULL) {
   FPR <- tibble::as_tibble(data.frame(score_cut = score_cut, FPR))
   TPR <- tibble::as_tibble(data.frame(score_cut = score_cut, TPR))
   colnames(FPR)[-1] <- colnames(TPR)[-1] <- names(AUC) <- names(lambda0)
-  return(list(FPR = FPR, TPR = TPR, AUC = AUC))
+  list(FPR = FPR, TPR = TPR, AUC = AUC)
 }

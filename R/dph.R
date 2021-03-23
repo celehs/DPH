@@ -31,12 +31,12 @@ dph <- function(time, status, pred) {
   names(lambda0) <- paste0("time", 1:t_max)
   names(beta) <- colnames(Z)
   acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
-  return(list(
+  list(
     beta = beta, 
     lambda0 = lambda0, 
     loglik = c(stats::logLik(fit)),
     FPR = acc$FPR,
     TPR = acc$TPR,
     AUC = acc$AUC
-  ))
+  )
 }

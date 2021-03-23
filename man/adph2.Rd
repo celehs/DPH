@@ -8,12 +8,14 @@ adph2(
   time,
   status,
   pred,
-  lambda0 = NULL,
-  lambda0_s = NULL,
+  init_beta = NULL,
+  init_lambda0 = NULL,
+  init_lambda0_s = NULL,
   n_ptb = NULL,
   seed = 1,
   show_progress = FALSE,
-  maxit = 1000
+  maxit = 1000,
+  ...
 )
 }
 \arguments{
@@ -23,9 +25,11 @@ adph2(
 
 \item{pred}{a vector/matrix of predictors (e.g. biomarkers)}
 
-\item{lambda0}{baseline hazards}
+\item{init_beta}{initial values for beta}
 
-\item{lambda0_s}{...}
+\item{init_lambda0}{initial values for lambda0}
+
+\item{init_lambda0_s}{initial values for lambda0_s}
 
 \item{n_ptb}{number of perturbations}
 
@@ -34,6 +38,8 @@ adph2(
 \item{show_progress}{TRUE or FALSE (default)}
 
 \item{maxit}{maximum number of iterations}
+
+\item{...}{additional arguments for controlling model fitting (see code{\link[stats]{optim}})}
 }
 \description{
 Adjusted Discrete Proportional Hazards (ADPH) Model

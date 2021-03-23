@@ -36,7 +36,7 @@ adph_loglik <- function(beta, lambda0, sens, spec, t0, d0, X) {
       }
     }
   }
-  return(sum(log(lik)))
+  sum(log(lik))
 }
 
 #' Adjusted Discrete Proportional Hazards (ADPH) Model
@@ -131,7 +131,7 @@ adph <- function(time, status, pred, sens, spec, sens_known = TRUE, spec_known =
   beta <- fit$par[1:np]
   lambda0 <- stats::plogis(fit$par[np + 1:nt])     
   acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
-  return(list(
+  list(
     beta = beta, 
     lambda0 = lambda0, 
     sens = sens, 
@@ -140,5 +140,5 @@ adph <- function(time, status, pred, sens, spec, sens_known = TRUE, spec_known =
     FPR = acc$FPR,
     TPR = acc$TPR,
     AUC = acc$AUC
-  ))  
+  )  
 }
