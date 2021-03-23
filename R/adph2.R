@@ -69,7 +69,7 @@ adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000, 
 #' @param seed random number generation seed
 #' @param show_progress TRUE or FALSE (default)
 #' @param maxit maximum number of iterations
-#' @param ... additional arguments for controlling model fitting (see code{\link[stats]{optim}})  
+#' @param ... additional arguments for controlling model fitting (see \code{\link[stats]{optim}})  
 #' @export
 adph2 <- function(time, status, pred, init_beta = NULL, init_lambda0 = NULL, init_lambda0_s = NULL, 
                   n_ptb = NULL, seed = 1, show_progress = FALSE, maxit = 1000, ...) {

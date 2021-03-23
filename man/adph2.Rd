@@ -39,7 +39,7 @@ adph2(
 
 \item{maxit}{maximum number of iterations}
 
-\item{...}{additional arguments for controlling model fitting (see code{\link[stats]{optim}})}
+\item{...}{additional arguments for controlling model fitting (see \code{\link[stats]{optim}})}
 }
 \description{
 Adjusted Discrete Proportional Hazards (ADPH) Model

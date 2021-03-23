@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">DPH</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3-1</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://github.com/celehs/DPH/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -139,12 +139,14 @@
   <span class='va'>time</span>,
   <span class='va'>status</span>,
   <span class='va'>pred</span>,
-  lambda0 <span class='op'>=</span> <span class='cn'>NULL</span>,
-  lambda0_s <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init_beta <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init_lambda0 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  init_lambda0_s <span class='op'>=</span> <span class='cn'>NULL</span>,
   n_ptb <span class='op'>=</span> <span class='cn'>NULL</span>,
   seed <span class='op'>=</span> <span class='fl'>1</span>,
   show_progress <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  maxit <span class='op'>=</span> <span class='fl'>1000</span>
+  maxit <span class='op'>=</span> <span class='fl'>1000</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -163,12 +165,16 @@
       <td><p>a vector/matrix of predictors (e.g. biomarkers)</p></td>
     </tr>
     <tr>
-      <th>lambda0</th>
-      <td><p>baseline hazards</p></td>
+      <th>init_beta</th>
+      <td><p>initial values for beta</p></td>
     </tr>
     <tr>
-      <th>lambda0_s</th>
-      <td><p>...</p></td>
+      <th>init_lambda0</th>
+      <td><p>initial values for lambda0</p></td>
+    </tr>
+    <tr>
+      <th>init_lambda0_s</th>
+      <td><p>initial values for lambda0_s</p></td>
     </tr>
     <tr>
       <th>n_ptb</th>
@@ -185,6 +191,10 @@
     <tr>
       <th>maxit</th>
       <td><p>maximum number of iterations</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments for controlling model fitting (see <code><a href='https://rdrr.io/r/stats/optim.html'>optim</a></code>)</p></td>
     </tr>
     </table>
 
