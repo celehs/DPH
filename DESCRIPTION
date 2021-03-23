@@ -1,23 +1,21 @@
 Package: DPH
 Title: Discrete Proportional Hazards Models
-Version: 0.0.3
-Authors@R: 
-    person("PARSE",
-           role = c("aut", "cre"),
-           email = "software@parse-health.org")
-Description: Fit standard discrete proportional hazards (DPH) model and DPH models with mismeasured outcomes.
+Version: 0.0.3-1
+Authors@R: person("PARSE", role = c("aut", "cre"), email = "software@parse-health.org")
+Description: Fit standard discrete proportional hazards (DPH) model and 
+    DPH models with mismeasured outcomes.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)
 Imports:
     tibble
-URL: http://github.com/celehs/DPH
 Suggests: 
     knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
+URL: http://github.com/celehs/DPH

@@ -18,10 +18,10 @@ adph2_loglik <- function(beta, lambda0, lambda0_s, t0, d0, X, w = NULL) {
   S0 <- t(S0)  
   index <- cbind(1:n, t0)  
   loglik <- w * (d0 * log(P0[index]) + (1 - d0) * log(S0[index]))
-  return(sum(loglik))
+  sum(loglik)
 }
 
-adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000) {
+adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000, ...) {
   nt <- max(time)  
   np <- ncol(X) 
   obj <- stats::optim(
@@ -38,14 +38,15 @@ adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000) 
       )
     },
     method = method,
-    control = list(maxit = maxit)
+    control = list(maxit = maxit),
+    ...
   )     
   loglik <- -obj$value
   beta <- obj$par[1:np]
   lambda0 <- stats::plogis(obj$par[np + 1:nt]) 
   lambda0_s <- stats::plogis(obj$par[np + nt + 1:nt])
   acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
-  return(list(
+  list(
     convergence = obj$convergence,
     loglik = loglik,
     beta = beta, 
@@ -53,37 +54,42 @@ adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000) 
     lambda0_s = lambda0_s,
     FPR = acc$FPR,
     TPR = acc$TPR,
-    AUC = acc$AUC))
+    AUC = acc$AUC
+  )
 }
 
 #' Adjusted Discrete Proportional Hazards (ADPH) Model
 #' @param time a vector of discrete time (e.g. 1, 2, 3, ...)
 #' @param status a vector of event status (1 = observed, 0 = censored)
 #' @param pred a vector/matrix of predictors (e.g. biomarkers)
-#' @param lambda0 baseline hazards
-#' @param lambda0_s ...
+#' @param init_beta initial values for beta
+#' @param init_lambda0 initial values for lambda0
+#' @param init_lambda0_s initial values for lambda0_s
 #' @param n_ptb number of perturbations
 #' @param seed random number generation seed
 #' @param show_progress TRUE or FALSE (default)
 #' @param maxit maximum number of iterations
+#' @param ... additional arguments for controlling model fitting (see code{\link[stats]{optim}})  
 #' @export
-adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL, 
-                  n_ptb = NULL, seed = 1, show_progress = FALSE, maxit = 1000) {
+adph2 <- function(time, status, pred, init_beta = NULL, init_lambda0 = NULL, init_lambda0_s = NULL, 
+                  n_ptb = NULL, seed = 1, show_progress = FALSE, maxit = 1000, ...) {
   n <- length(time)
   nt <- max(time)
   X <- as.matrix(pred)  
   np <- ncol(X)  
   fit0 <- dph(time, status, pred)
-  if (is.null(lambda0)) lambda0 <- fit0$lambda0
-  if (is.null(lambda0_s)) lambda0_s <- lambda0
-  start <- c(fit0$beta, stats::qlogis(lambda0), stats::qlogis(lambda0_s)) 
+  if (is.null(init_beta)) init_beta <- fit0$beta
+  if (is.null(init_lambda0)) init_lambda0 <- fit0$lambda0
+  if (is.null(init_lambda0_s)) init_lambda0_s <- init_lambda0
+  start <- c(init_beta, stats::qlogis(init_lambda0), stats::qlogis(init_lambda0_s)) 
   fit <- adph2_fit(
     time = time,
     status = status,
     X = X,
     w = rep(1, n),
     start = start,
-    maxit = maxit
+    maxit = maxit, 
+    ...
   )
   ptb <- NULL
   if (!is.null(n_ptb) & fit$convergence == 0) {
@@ -123,5 +129,5 @@ adph2 <- function(time, status, pred, lambda0 = NULL, lambda0_s = NULL,
     ptb$lambda0_s <- tibble::as_tibble(ptb$lambda0_s)
     ptb$AUC <- tibble::as_tibble(ptb$AUC)    
   }  
-  return(list(fit = fit, ptb = ptb))  
+  list(fit = fit, ptb = ptb) 
 }
