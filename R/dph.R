@@ -32,6 +32,7 @@ dph <- function(time, status, pred) {
   names(beta) <- colnames(Z)
   acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
   list(
+    converged = fit$converged,
     beta = beta, 
     lambda0 = lambda0, 
     loglik = c(stats::logLik(fit)),

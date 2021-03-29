@@ -47,7 +47,8 @@ adph2_fit <- function(time, status, X, w, start, method = "BFGS", maxit = 1000, 
   lambda0_s <- stats::plogis(obj$par[np + nt + 1:nt])
   acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
   list(
-    convergence = obj$convergence,
+    converged = if (obj$convergence == 0) TRUE else FALSE,
+    convergence = obj$convergence,    
     loglik = loglik,
     beta = beta, 
     lambda0 = lambda0,
@@ -92,7 +93,7 @@ adph2 <- function(time, status, pred, init_beta = NULL, init_lambda0 = NULL, ini
     ...
   )
   ptb <- NULL
-  if (!is.null(n_ptb) & fit$convergence == 0) {
+  if (!is.null(n_ptb) & fit$converged) {
     ptb$weights <- data.frame(matrix(NA, n, n_ptb))
     ptb$beta <- data.frame(matrix(NA, n_ptb, np))
     ptb$lambda0 <- data.frame(matrix(NA, n_ptb, nt))
@@ -116,7 +117,7 @@ adph2 <- function(time, status, pred, init_beta = NULL, init_lambda0 = NULL, ini
         start = start,
         maxit = maxit
       ) 
-      if (fit_ptb$convergence == 0) {
+      if (fit_ptb$converged) {
         ptb$beta[i, ] <- fit_ptb$beta
         ptb$lambda0[i, ] <- fit_ptb$lambda0
         ptb$lambda0_s[i, ] <- fit_ptb$lambda0_s   

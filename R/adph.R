@@ -132,6 +132,7 @@ adph <- function(time, status, pred, sens, spec, sens_known = TRUE, spec_known =
   lambda0 <- stats::plogis(fit$par[np + 1:nt])     
   acc <- acc_est(score = c(X %*% beta), X = X, beta = beta, lambda0 = lambda0)
   list(
+    converged = if (fit$convergence == 0) TRUE else FALSE,
     convergence = fit$convergence,
     beta = beta, 
     lambda0 = lambda0, 
